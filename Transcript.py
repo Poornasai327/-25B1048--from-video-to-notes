@@ -1,4 +1,6 @@
 from youtube_transcript_api import YouTubeTranscriptApi, NoTranscriptFound ,TranscriptsDisabled
+import json
+
 
 video_id = input("Enter the YouTube video ID: ")
 
@@ -28,12 +30,22 @@ elif Required_Script=='2':
 
 script='\n'
 
+raw_data=[
+   {'time':line.start,
+   'text':line.text,
+   'duration':line.duration
+   }
+   for line in raw_script
+   ]
+
 for line in raw_script:
    script+=script.join([line.text])
    script+=" "
 
-File_Name=input("Enter the File Name: ") + '.txt'
+File_Name=input("Enter the File Name: ")
+json.dump(raw_data,open(File_Name + '.json','w',encoding='utf-8'),ensure_ascii=False,indent=4)
 
+File_Name+='.txt'
 f= open(File_Name,'w',encoding='utf-8')
 f.write(script)
 f.close
