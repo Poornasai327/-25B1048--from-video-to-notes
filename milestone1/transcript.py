@@ -1,5 +1,6 @@
 from youtube_transcript_api import YouTubeTranscriptApi, NoTranscriptFound ,TranscriptsDisabled
 import json
+import re
 
 
 video_id = input("Enter the YouTube video ID: ")
@@ -42,8 +43,19 @@ for line in raw_script:
    script+=script.join([line.text])
    script+=" "
 
+def cleaning_text(script):
+   script=re.sub(r'\s+',' ',script)
+   script=re.sub(r'\n+','\n',script)
+   script=re.sub(r'(\[.*?\])|(\(.*?\))','',script)
+   script=re.sub(r"\s([?.!,])", r"\1", script)
+   script=re.sub(r"([?.!,])([^\s])", r"\1 \2", script)
+   return script.strip()
+
 File_Name=input("Enter the File Name: ")
 json.dump(raw_data,open(File_Name + '.json','w',encoding='utf-8'),ensure_ascii=False,indent=4)
+
+script=cleaning_text(script)
+print('Transcript cleaned successfully.')
 
 File_Name+='.txt'
 f= open(File_Name,'w',encoding='utf-8')
