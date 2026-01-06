@@ -12,7 +12,7 @@ except TranscriptsDisabled or NoTranscriptFound:
    print('No Transcript found for the given video ID.')
    exit()
 
-Required_Script=input('Enter 1 for Manual or 2 for Auto Generated or 3 for Translated: ')
+Required_Script=input('Enter 1 for Manual or 2 for Auto Generated: ')
 Required_Language=input('Enter the Required Language code: ')
 
 if Required_Script=='1':
